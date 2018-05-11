@@ -1,0 +1,33 @@
+.wrapper
+{
+margin: 0 50px;
+border: 1px solid blue; 
+padding:0 10px 10px;
+min-height: 100px;
+}
+.ribboncls{
+
+    height: 30px;
+    width: 100%;
+    background-color: #fff;
+    line-height: 30px;
+    color: #000;
+    font-size: 24px;
+}
+.nav{
+background-color: blue;
+line-height: 50px;
+color: #fff;
+height: 50px;
+padding: 0 10px;
+}
+.nav a{
+padding-right: 10px;
+font-size: 18px;
+color: #fff;
+text-decoration:none;
+}
+.nav a:hover{
+    cursor: pointer;
+    text-decoration:underline;
+}

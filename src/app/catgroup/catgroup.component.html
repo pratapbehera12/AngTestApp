@@ -1,0 +1,10 @@
+
+<div class="error" *ngIf="catModel.error; else showData">Oops, something went wrong...Please try again later.</div>
+<ng-template #showData>
+    <div *ngFor="let catGroup of catModel.catDataCol">
+        <h2>{{catGroup.ownerGender}}</h2>
+        <ul>
+            <li *ngFor="let cat of catGroup.cats">{{cat}}</li>
+        </ul>
+    </div>
+</ng-template>
