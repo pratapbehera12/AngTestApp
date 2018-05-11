@@ -9,51 +9,51 @@ import { IApiService } from '../service/iapi.service';
 
 
 @Component({
-  selector: 'app-catgroup',
-  templateUrl: './catgroup.component.html',
-  styleUrls: ['./catgroup.component.css']
+    selector: 'app-catgroup',
+    templateUrl: './catgroup.component.html',
+    styleUrls: ['./catgroup.component.css']
 })
 export class CatgroupComponent implements OnInit {
-  public catModel: CatsModel
+    public catModel: CatsModel
  
-  constructor(private api:IApiService) {
+    constructor(private api: IApiService) {
     
-    this.catModel = new CatsModel();
-  }
+        this.catModel = new CatsModel();
+    }
    
-  filterCatsByOwnerGender(data: AnimalModel[]): PeopleModel[] {
-    const returnData: PeopleModel[] = [];
-    if (data !== undefined) {
+    filterCatsByOwnerGender(data: AnimalModel[]): PeopleModel[] {
+        const returnData: PeopleModel[] = [];
+        if (data !== undefined) {
 
-        const reducedData = _.reduce(data, function (result, owner) {
-            const petCats = _.filter(owner.pets, { 'type': 'Cat' });
-            _.forEach(petCats, function (value) {
-                if (!result[owner.gender]) {
-                    result[owner.gender] = [];
-                }
-                result[owner.gender].push(value.name);
-            });
-            return result;
-        }, {});
+            const reducedData = _.reduce(data, function (result, owner) {
+                const petCats = _.filter(owner.pets, { 'type': 'Cat' });
+                _.forEach(petCats, function (value) {
+                    if (!result[owner.gender]) {
+                        result[owner.gender] = [];
+                    }
+                    result[owner.gender].push(value.name);
+                });
+                return result;
+            }, {});
 
-        _.forEach(reducedData, function (value, key) {
-            returnData.push({
-                ownerGender: key,
-                cats: _.sortBy(value)
+            _.forEach(reducedData, function (value, key) {
+                returnData.push({
+                    ownerGender: key,
+                    cats: _.sortBy(value)
+                });
             });
+        }
+
+        return returnData;
+    }
+  
+    ngOnInit() {
+        this.api.getItems().subscribe((data) => {
+            this.catModel.catDataCol = this.filterCatsByOwnerGender(data);
+        }, (err) => {
+            console.error(err);
+            this.catModel.error = true;
         });
     }
-
-    return returnData;
-}
-  
-  ngOnInit() {
-    this.api.getItems().subscribe((data) => {
-      this.catModel.catDataCol = this.filterCatsByOwnerGender(data);
-  }, (err) => {
-      console.error(err);
-      this.catModel.error = true;
-  });
-  }
 
 }
